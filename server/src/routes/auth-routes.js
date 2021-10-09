@@ -3,7 +3,8 @@ const AuthController = require("../controllers/auth-controller");
 const router = express.Router();
 const authController = new AuthController();
 
-router.get("/login", authController.login);
-router.get("/roles", authController.getRoles);
+router.post("/login", authController.login.bind(authController));
+router.get("/roles", authController.getRoles.bind(authController));
+router.post("/register", authController.register.bind(authController));
 
 module.exports = router;
