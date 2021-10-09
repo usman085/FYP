@@ -73,9 +73,9 @@ app.post('/updateBookingStatus', (req, res) => {
     client.connect(err => {
         const collection = client.db('doctorsPortal').collection('bookedAppointments');
         collection.updateOne({ _id: ObjectId(ap.id) }, {
-                $set: { "status": ap.status },
-                $currentDate: { "lastModified": true }
-            },
+            $set: { "status": ap.status },
+            $currentDate: { "lastModified": true }
+        },
             (err, result) => {
                 if (err) {
                     console.log(err);
@@ -98,9 +98,9 @@ app.post('/updatePrescription', (req, res) => {
     client.connect(err => {
         const collection = client.db('doctorsPortal').collection('bookedAppointments');
         collection.updateOne({ _id: ObjectId(ap.id) }, {
-                $set: { "prescription": ap.prescription },
-                $currentDate: { "lastModified": true }
-            },
+            $set: { "prescription": ap.prescription },
+            $currentDate: { "lastModified": true }
+        },
             (err, result) => {
                 if (err) {
                     console.log(err);
@@ -123,9 +123,9 @@ app.post('/updateVisitingStatus', (req, res) => {
     client.connect(err => {
         const collection = client.db('doctorsPortal').collection('bookedAppointments');
         collection.updateOne({ _id: ObjectId(ap.id) }, {
-                $set: { "visitingStatus": ap.visitingStatus },
-                $currentDate: { "lastModified": true }
-            },
+            $set: { "visitingStatus": ap.visitingStatus },
+            $currentDate: { "lastModified": true }
+        },
             (err, result) => {
                 if (err) {
                     console.log(err);
@@ -151,9 +151,9 @@ app.post('/updateAppointmentTime', (req, res) => {
     client.connect(err => {
         const collection = client.db('doctorsPortal').collection('bookedAppointments');
         collection.updateOne({ _id: ObjectId(ap.id) }, {
-                $set: { "date": ap.date, "time": ap.time },
-                $currentDate: { "lastModified": true }
-            },
+            $set: { "date": ap.date, "time": ap.time },
+            $currentDate: { "lastModified": true }
+        },
             (err, result) => {
                 if (err) {
                     console.log(err);
@@ -170,7 +170,7 @@ app.post('/updateAppointmentTime', (req, res) => {
 
 // Dummy Route to insert Appointment Data at once
 
-app.post('/insertAppointment', async(req, res) => {
+app.post('/insertAppointment', async (req, res) => {
     const data = req.body;
     console.log(data);
     client = await new MongoClient(uri, { useNewUrlParser: true, useUnifiedTopology: true });

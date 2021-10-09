@@ -17,7 +17,9 @@ function router() {
                     <Switch>
                         <Route exact path="/" component={Home}></Route>
                         <AuthRoute path="/login" component={Login} />
-                        <ProtectedRoute path="/" component={Main} />
+                        <AuthRoute path="/login" component={Login} />
+
+                        <ProtectedRoute path="/doctor" component={Main} />
                         <Route render={() => <Redirect to="/" />} />
                     </Switch>
                 </BrowserRouter>

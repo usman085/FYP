@@ -12,11 +12,11 @@ function RestaurantRoutes() {
         <React.Fragment>
             <Suspense >
                 <Route path={`${path}/dashboard`} component={Dashboard} />
-                <Route path={`${path}/patients`} component={Dashboard} />
+                {/* <Route path={`${path}/patients`} component={Dashboard} />
                 <Route path={`${path}/appointment`} component={Dashboard} />
-                <Route path={`${path}/prescriptions`} component={Dashboard} />
+                <Route path={`${path}/prescriptions`} component={Dashboard} /> */}
 
-                <Route render={() => <Redirect to={`${path}/profile`} />} />
+                <Route render={() => <Redirect to={`${path}/dashboard`} />} />
             </Suspense>
         </React.Fragment>
 
