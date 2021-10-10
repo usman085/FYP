@@ -6,6 +6,7 @@ const UserSchema = new mongoose.Schema(
     email: String,
     password: String,
     role_id: { type: mongoose.Schema.Types.ObjectId, ref: "Role" },
+    department_id: { type: mongoose.Schema.Types.ObjectId, ref: "Department" },
   },
   { timestamps: true }
 );
