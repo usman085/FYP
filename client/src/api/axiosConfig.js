@@ -3,7 +3,7 @@ import axios from 'axios'
 // console.log(process.env.MIX_APP_URL);
 
 let instance = axios.create({
-    baseURL: `/api/`,
+    baseURL: `http://localhost:4500/api/`,
     withCredentials: true,
     headers: {
         'Content-Type': 'application/json',

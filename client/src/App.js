@@ -24,41 +24,41 @@ function App() {
   const [date, setDate] = useState(new Date());
   const [preLoaderVisibility, setPreLoaderVisibility] = useState(true);
 
-  useEffect(() => {
-    fetch("http://localhost:3200/appointments")
-      .then(res => res.json())
-      .then(data => {
-        setAllAppointments(data);
-        setPreLoaderVisibility(false);
-      })
-  }, [allAppointments.length])
+  // useEffect(() => {
+  //   fetch("http://localhost:3200/appointments")
+  //     .then(res => res.json())
+  //     .then(data => {
+  //       setAllAppointments(data);
+  //       setPreLoaderVisibility(false);
+  //     })
+  // }, [allAppointments.length])
 
-  useEffect(() => {
-    fetch("http://localhost:3200/bookedAppointments")
-      .then(res => res.json())
-      .then(data => setAllBookedAppointments(data));
+  // useEffect(() => {
+  //   fetch("http://localhost:3200/bookedAppointments")
+  //     .then(res => res.json())
+  //     .then(data => setAllBookedAppointments(data));
 
-    const uniquePatients = [];
-    const map = new Map();
-    if (allBookedAppointments.length) {
-      for (const ap of allBookedAppointments) {
-        if (!map.has(ap.patientInfo.phone)) {
-          map.set(ap.patientInfo.phone, true);    // set any value to Map
-          uniquePatients.push({
-            name: ap.patientInfo.name,
-            phone: ap.patientInfo.phone,
-            email: ap.patientInfo.email,
-            gender: ap.patientInfo.gender,
-            age: ap.patientInfo.age,
-            weight: ap.patientInfo.weight
-          });
-        }
-      }
-    }
+  //   const uniquePatients = [];
+  //   const map = new Map();
+  //   if (allBookedAppointments.length) {
+  //     for (const ap of allBookedAppointments) {
+  //       if (!map.has(ap.patientInfo.phone)) {
+  //         map.set(ap.patientInfo.phone, true);    // set any value to Map
+  //         uniquePatients.push({
+  //           name: ap.patientInfo.name,
+  //           phone: ap.patientInfo.phone,
+  //           email: ap.patientInfo.email,
+  //           gender: ap.patientInfo.gender,
+  //           age: ap.patientInfo.age,
+  //           weight: ap.patientInfo.weight
+  //         });
+  //       }
+  //     }
+  //   }
 
-    setAllPatients(uniquePatients);
+  //   setAllPatients(uniquePatients);
 
-  }, [allBookedAppointments.length])
+  // }, [allBookedAppointments.length])
 
   const contextData = { allAppointments, setAllAppointments, allBookedAppointments, setAllBookedAppointments, allPatients, preLoaderVisibility }
   const calenderContextValue = { date, setDate };

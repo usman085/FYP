@@ -1,5 +1,5 @@
 import instance from './axiosConfig';
-import { generateUID } from '../helper/helper';
+// import { generateUID } from '../helper/helper';
 
 function token() {
     if (localStorage.getItem('auth_user')) {
@@ -10,7 +10,12 @@ function token() {
     return null;
 
 }
-
-export async function login() {
-    return await instance.get('/auth/login');
+export async function login({ email, password }) {
+    return await instance.post('/auth/login', { email, password });
+}
+export async function register({ name, email, password, role_id }) {
+    return await instance.post('/auth/register', { name, email, password, role_id });
+}
+export async function roles() {
+    return await instance.get('/auth/roles');
 }

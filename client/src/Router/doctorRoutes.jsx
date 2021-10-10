@@ -1,8 +1,8 @@
 import React, { Suspense } from 'react';
 import { Route, Redirect, useRouteMatch } from "react-router-dom";
 
-const Dashboard = React.lazy(() => import('../Pages/Dashboard/Dashboard'));
-
+// const Dashboard = React.lazy(() => import('../Pages/Dashboard/Dashboard'));
+import Dashboard from '../Pages/Dashboard/Dashboard'
 function RestaurantRoutes() {
 
     let { path, url } = useRouteMatch();
@@ -10,13 +10,13 @@ function RestaurantRoutes() {
     return (
 
         <React.Fragment>
-            <Suspense >
-                <Route path={`${path}/dashboard`} component={Dashboard} />
+            <Suspense fallback="loading">
+                <Route path={`${path}dashboard`} component={Dashboard} />
                 {/* <Route path={`${path}/patients`} component={Dashboard} />
                 <Route path={`${path}/appointment`} component={Dashboard} />
                 <Route path={`${path}/prescriptions`} component={Dashboard} /> */}
 
-                <Route render={() => <Redirect to={`${path}/dashboard`} />} />
+                <Route render={() => <Redirect to={`${path}dashboard`} />} />
             </Suspense>
         </React.Fragment>
 
