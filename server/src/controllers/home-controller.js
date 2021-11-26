@@ -51,8 +51,10 @@ class HomeController extends BaseController {
 
   getAppointments = async (req, res) => {
     try {
-      let { doctor_id, patient_id } = req.query;
-      let slots = await this.get(Appointment);
+      let { id } = req.query;
+      let slots = await Appointment.find({
+        patient_id: mongoose.Schema.Types.ObjectId(id),
+      }).populate("doctor_id");
       res.successResponse({ data: slots });
     } catch (e) {
       console.log(e);
