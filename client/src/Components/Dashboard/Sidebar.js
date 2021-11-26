@@ -14,7 +14,7 @@ const Sidebar = () => {
     // console.log(JSON.parse(localStorage.getItem('auth_user')).user.role_id.name)
     return (
         <div className="sidebar d-flex flex-column justify-content-between col-md-2 py-5 px-4" style={{height:"100vh"}}>
-            <p>{}</p>
+          
           {
                 JSON.parse(localStorage.getItem('auth_user')).user.role_id.name == "Doctor"
                 ?
@@ -41,7 +41,25 @@ const Sidebar = () => {
                         </li>
                        
                     </ul>
-                :""
+                    : <ul className="list-unstyled">
+                        <li>
+                            <Link to="/patient/dashboard" className="text-white">
+                                <FontAwesomeIcon icon={faGripHorizontal} /> <span>Dashboard</span>
+                            </Link>
+                        </li>
+                        <li>
+                            <Link to="/patient/appointment" className="text-white">
+                                <FontAwesomeIcon icon={faCalendar} /> <span>Appointment</span>
+                            </Link>
+                        </li>
+                      
+                        <li>
+                            <Link to="/prescriptions" className="text-white">
+                                <FontAwesomeIcon icon={faFileAlt} /> <span>Prescriptions</span>
+                            </Link>
+                        </li>
+
+                    </ul>
           }
           
             <div>
