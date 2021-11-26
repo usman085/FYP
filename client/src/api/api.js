@@ -19,3 +19,9 @@ export async function register({ name, email, password, role_id }) {
 export async function roles() {
     return await instance.get('/auth/roles');
 }
+export async function getDoc() {
+    return await instance.get('/auth/roles');
+}
+export async function createApp() {
+    return await instance.get('/auth/roles');
+}

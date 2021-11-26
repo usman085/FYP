@@ -18,60 +18,131 @@ const AppointmentTable = () => {
   const [isBooked, setIsBooked] = useState(false);
   console.log(contextData_2.preLoaderVisibility);
 
-  const date = `${contextData.date.getDate()}-${
-    contextData.date.getMonth() + 1
-  }-${contextData.date.getFullYear()}`;
 
-  const makeBooking = (patientInfo) => {
-    setIsBooked(true);
-    const apId = selectAppointment.id;
-    const time = selectAppointment.visitingHour;
-    const dataToStore = { apId, date, time, patientInfo, status: "Pending" };
-    fetch("http://localhost:3200/makeBooking", {
-      method: "POST",
-      headers: {
-        "Content-type": "application/json",
-      },
-      body: JSON.stringify(dataToStore),
-    })
-      .then((res) => res.json())
-      .then((data) => {
-        const newAllBooking = [...contextData_2.allBookedAppointments];
-        newAllBooking.push(data);
-        contextData_2.setAllBookedAppointments(newAllBooking);
-      })
-      .catch((err) => console.log(err));
-  };
-
+ 
   const { register, handleSubmit, watch, errors } = useForm();
 
   const onSubmit = (data) => {
     console.log(data);
-    makeBooking(data);
+    
   };
-  const modalController = (apId) => {
-    setModalIsOpen(true);
-    const selectedAp = contextData_2.allAppointments.find(
-      (ap) => ap.id === apId
-    );
-    if (selectedAp) {
-      setSelectAppointment(selectedAp);
-    }
-  };
+ 
   return (
-    <div className="appointments container py-5 mt-5">
-      <h3 className="text-primary text-center my-5">
-        {" "}
-        Available Appointments on{" "}
-        {contextData.date.toLocaleString("default", { month: "long" })}{" "}
-        {contextData.date.getDate()}, {contextData.date.getFullYear()}{" "}
+   
+    <div className="offset-2 col-md-10 p-4 pr-5 ">
+      <h3 className="text-primary text-center p-12">
+      Create Appointment
       </h3>{" "}
       <div className="row">
-        {" "}
-        {contextData_2.preLoaderVisibility && <Preloader />}{" "}
-        {contextData_2.allAppointments.map((SingleAp) => (
-          <AppointmentCard data={SingleAp} modalController={modalController} />
-        ))}
+        <button onClick={() => setModalIsOpen(true)} className="btn btn-primary text-uppercase text-align-right">Book appointment</button>
+        <table className="table table-border">
+          <thead>
+            <tr className="text-center">
+              <th className="text-secondary text-left" scope="col">
+                {" "}
+                Sr No{" "}
+              </th>{" "}
+              <th className="text-secondary" scope="col">
+                {" "}
+                Date{" "}
+              </th>{" "}
+              <th className="text-secondary" scope="col">
+                {" "}
+                Time{" "}
+              </th>{" "}
+              <th className="text-secondary" scope="col">
+                {" "}
+                Name{" "}
+              </th>{" "}
+              <th className="text-secondary" scope="col">
+                {" "}
+                Contact{" "}
+              </th>{" "}
+              <th className="text-secondary" scope="col">
+                {" "}
+                Prescription{" "}
+              </th>{" "}
+              <th className="text-secondary" scope="col">
+                {" "}
+                Action{" "}
+              </th>{" "}
+            </tr>{" "}
+          </thead>{" "}
+          <tbody>
+            {" "}
+            {/* {ContextData.allBookedAppointments.map(ap => (
+              <tr>
+                <td> {srNo++} </td> <td> {ap.date} </td> <td> {ap.time} </td>{" "}
+                <td> {ap.patientInfo.name} </td> <td> {ap.patientInfo.phone} </td>
+                <td className="text-center">
+                  {" "}
+                  {ap.prescription ? (
+                    <button
+                      onClick={() => openPrescriptionModal(ap._id)}
+                      className="btn btn-primary"
+                    >
+                      {" "}
+                      View{" "}
+                    </button>
+                  ) : (
+                    <span>
+                      <span> Not Added </span>{" "}
+                      <FontAwesomeIcon
+                        onClick={() => openPrescriptionModal(ap._id)}
+                        className="text-success ml-2"
+                        style={{ cursor: "pointer" }}
+                        icon={faPlusCircle}
+                      />{" "}
+                    </span>
+                  )}{" "}
+                </td>{" "}
+                <td className="text-center">
+                  <select
+                    onClick={() => setSelectAppointment(ap)}
+                    onChange={e => handleStatusChange(e.target.value)}
+                    className={
+                      ap.status == "Rejected"
+                        ? "btn btn-danger"
+                        : ap.status == "Approved"
+                          ? "btn btn-success"
+                          : "btn btn-info"
+                    }
+                  >
+                    <option
+                      selected={ap.status == "Pending"}
+                      className="bg-white text-secondary"
+                    >
+                      {" "}
+                      Pending{" "}
+                    </option>{" "}
+                    <option
+                      selected={ap.status == "Approved"}
+                      className="bg-white text-secondary"
+                    >
+                      {" "}
+                      Approved{" "}
+                    </option>{" "}
+                    <option
+                      selected={ap.status == "Rejected"}
+                      className="bg-white text-secondary"
+                    >
+                      {" "}
+                      Rejected{" "}
+                    </option>{" "}
+                  </select>
+
+                  <button
+                    onClick={() => openDataEditModal(ap._id)}
+                    className="btn ml-1 btn-warning text-white"
+                  >
+                    {" "}
+                    <FontAwesomeIcon icon={faPencilAlt} />{" "}
+                  </button>
+                </td>{" "}
+              </tr>
+            ))} */}
+          </tbody>{" "}
+        </table>
       </div>
       <Modal
         isOpen={modalIsOpen}
@@ -104,11 +175,11 @@ const AppointmentTable = () => {
             <h4 className="mt-5 lead"> Appointment Request Sent! </h4>{" "}
           </div>
         ) : (
-          selectAppointment && (
+       (
             <div className="px-4">
               <h4 className="text-primary text-center">
-                {" "}
-                {selectAppointment.subject}{" "}
+            
+                
               </h4>{" "}
               <p className="text-center text-secondary  small mb-5">
                 {" "}
