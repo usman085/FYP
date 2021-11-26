@@ -60,6 +60,31 @@ class HomeController extends BaseController {
     }
   };
 
+  allDoctors = async (req, res) => {
+    try {
+      let result = await User.aggregate([
+        {
+          $lookup: {
+            from: "Role",
+            localField: "role_id",
+            foreignField: "_id",
+            as: "roles",
+          },
+        },
+        { $unwind: "$roles" },
+        {
+          $match: {
+            "role.name": "Doctor",
+          },
+        },
+      ]);
+      res.successResponse({ data: result });
+    } catch (e) {
+      console.log(e);
+      res.errorResponse();
+    }
+  };
+
   createAppointment = async (req, res) => {
     try {
       let appointment = await this.create(Appointment, req.body);
