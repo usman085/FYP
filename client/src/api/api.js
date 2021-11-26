@@ -26,5 +26,5 @@ export async function createApp(data) {
     return await instance.post('/appointment', data);
 }
 export async function getAppointment(id) {
-    return await instance.post(`/appointment/${id}`);
+    return await instance.get(`/appointment/${id}`);
 }

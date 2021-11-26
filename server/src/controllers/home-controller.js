@@ -3,6 +3,7 @@ const User = require("../models/User");
 const Department = require("../models/Department");
 const Availability = require("../models/Availability");
 const Appointment = require("../models/Appointment");
+const mongoose = require("mongoose");
 
 class HomeController extends BaseController {
   constructor() {
@@ -51,9 +52,10 @@ class HomeController extends BaseController {
 
   getAppointments = async (req, res) => {
     try {
-      let { id } = req.query;
+      let { id } = req.params;
+      console.log(id)
       let slots = await Appointment.find({
-        patient_id: mongoose.Schema.Types.ObjectId(id),
+        patient_id: mongoose.Types.ObjectId(id),
       }).populate("doctor_id");
       res.successResponse({ data: slots });
     } catch (e) {

@@ -7,6 +7,8 @@ import { useForm } from "react-hook-form";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faCheckCircle } from "@fortawesome/free-solid-svg-icons";
 import Preloader from "../Preloader/Preloader";
+import { faPencilAlt, faPlusCircle } from "@fortawesome/free-solid-svg-icons";
+
 import { getDoc, createApp, getAppointment} from '../../api/api'
 Modal.setAppElement("#root");
 
@@ -55,18 +57,12 @@ const AppointmentTable = () => {
         <table className="table table-border">
           <thead>
             <tr className="text-center">
-              <th className="text-secondary text-left" scope="col">
-                {" "}
-                Sr No{" "}
-              </th>{" "}
+             
               <th className="text-secondary" scope="col">
                 {" "}
-                Date{" "}
+                Booking Date{" "}
               </th>{" "}
-              <th className="text-secondary" scope="col">
-                {" "}
-                Time{" "}
-              </th>{" "}
+             
               <th className="text-secondary" scope="col">
                 {" "}
                 Name{" "}
@@ -77,46 +73,24 @@ const AppointmentTable = () => {
               </th>{" "}
               <th className="text-secondary" scope="col">
                 {" "}
-                Prescription{" "}
+                Status{" "}
               </th>{" "}
-              <th className="text-secondary" scope="col">
-                {" "}
-                Action{" "}
-              </th>{" "}
+           
             </tr>{" "}
           </thead>{" "}
           <tbody>
             {" "}
-            {/* {ContextData.allBookedAppointments.map(ap => (
+            
+            {appointment.map(ap => (
               <tr>
-                <td> {srNo++} </td> <td> {ap.date} </td> <td> {ap.time} </td>{" "}
-                <td> {ap.patientInfo.name} </td> <td> {ap.patientInfo.phone} </td>
-                <td className="text-center">
-                  {" "}
-                  {ap.prescription ? (
-                    <button
-                      onClick={() => openPrescriptionModal(ap._id)}
-                      className="btn btn-primary"
-                    >
-                      {" "}
-                      View{" "}
-                    </button>
-                  ) : (
-                    <span>
-                      <span> Not Added </span>{" "}
-                      <FontAwesomeIcon
-                        onClick={() => openPrescriptionModal(ap._id)}
-                        className="text-success ml-2"
-                        style={{ cursor: "pointer" }}
-                        icon={faPlusCircle}
-                      />{" "}
-                    </span>
-                  )}{" "}
-                </td>{" "}
-                <td className="text-center">
+               
+                <td> {ap.createdAt} </td>
+                <td> {ap.doctor_id.name} </td>{" "}
+                <td> {ap.doctor_id.email} </td>{" "}
+                {/* <td className="text-center">
                   <select
-                    onClick={() => setSelectAppointment(ap)}
-                    onChange={e => handleStatusChange(e.target.value)}
+                    // onClick={() => setSelectAppointment(ap)}
+                    // onChange={e => handleStatusChange(e.target.value)}
                     className={
                       ap.status == "Rejected"
                         ? "btn btn-danger"
@@ -149,15 +123,16 @@ const AppointmentTable = () => {
                   </select>
 
                   <button
-                    onClick={() => openDataEditModal(ap._id)}
+                    // onClick={() => openDataEditModal(ap._id)}
                     className="btn ml-1 btn-warning text-white"
                   >
                     {" "}
                     <FontAwesomeIcon icon={faPencilAlt} />{" "}
                   </button>
-                </td>{" "}
+                </td>{" "} */}
+              
               </tr>
-            ))} */}
+            ))}
           </tbody>{" "}
         </table>
       </div>
