@@ -17,6 +17,11 @@ router.post(
 );
 
 router.get(
+  "/appointment/:id",
+  homeController.getAppointments.bind(homeController)
+);
+
+router.get(
   "/time-slot/:doctor_id",
   homeController.getDoctorTimeSlot.bind(homeController)
 );
