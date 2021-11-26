@@ -20,8 +20,11 @@ export async function roles() {
     return await instance.get('/auth/roles');
 }
 export async function getDoc() {
-    return await instance.get('/auth/roles');
+    return await instance.get('/doctors');
 }
-export async function createApp() {
-    return await instance.get('/auth/roles');
+export async function createApp(data) {
+    return await instance.post('/appointment', data);
+}
+export async function getAppointment(id) {
+    return await instance.post(`/appointment/${id}`);
 }

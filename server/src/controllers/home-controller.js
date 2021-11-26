@@ -65,7 +65,7 @@ class HomeController extends BaseController {
       let result = await User.aggregate([
         {
           $lookup: {
-            from: "Role",
+            from: "roles",
             localField: "role_id",
             foreignField: "_id",
             as: "roles",
@@ -74,7 +74,7 @@ class HomeController extends BaseController {
         { $unwind: "$roles" },
         {
           $match: {
-            "role.name": "Doctor",
+            "roles.name": "Doctor",
           },
         },
       ]);

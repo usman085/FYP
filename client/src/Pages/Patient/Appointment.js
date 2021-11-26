@@ -4,7 +4,7 @@ import Sidebar from '../../Components/Dashboard/Sidebar';
 import AppointmentSection from '../../Components/Appointment/AppointmentSection';
 import AppointmentTable from '../../Components/Appointment/AppoitmentTable';
 import { useEffect } from 'react';
-import { register, roles } from '../../api/api'
+
 
 const Appointment = () => {
     
