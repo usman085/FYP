@@ -1,5 +1,5 @@
 import React from 'react';
-import BannerImg from '../../images/banner-img.png';
+import BannerImg from '../../images/m.jpg';
 import { Link } from 'react-router-dom';
 import './Banner.css';
 const Banner = () => {
@@ -8,7 +8,7 @@ const Banner = () => {
             <div className="container">
                 <div className="row align-items-center" style={{ height: "100vh" }}>
                     <div className="col-md-4">
-                        <h1>Your New Smile <br /> Starts Here</h1>
+                        <h1>Your Healthy Life <br /> Starts Here</h1>
                         <p>Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry’s standard dummy text ever since the</p>
                         {localStorage.getItem('auth_user') ? <Link className="btn btn-primary" to="/appointment">Get appointment</Link> : ''}
 

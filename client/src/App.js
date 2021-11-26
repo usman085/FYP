@@ -73,44 +73,7 @@ function App() {
             </Switch>
           </BrowserRouter>
         </div>
-        {/* <Router>
-        <Switch>
-          <Route exact path="/">
-            <Home/>
-          </Route>
-   
-          <Route exact path="/login">
-            <Login/>
-          </Route>
-          
-          <Route path="/appointment">
-            <Appointment/>
-          </Route>
-          <Route  path="/doctor/dashboard">
-            <Dashboard/>
-          </Route>
-          <Route  path="/doctor/patients">
-            <Patients/>
-          </Route>
-          <Route  path="/doctor/appointment">
-            <DashBoardAppointments/>
-          </Route>
-          <Route  path="/doctor/prescriptions">
-            <Prescriptions/>
-          </Route> 
-
-          
-          <Route exact path="/register">
-            <Register/>
-          </Route>
-          
-        
-          <Route path="*">
-              <NotFound/>
-          </Route>
-        </Switch>
-        
-    </Router> */}
+       
       </CalenderContext.Provider>
     </DataContext.Provider>
   );

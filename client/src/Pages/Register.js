@@ -54,7 +54,8 @@ export default function Register() {
                     onSubmit={handleSubmit(onSubmit)}
                     className={classes.form}
                     noValidate>
-                    <div className="col-md-6 shadow p-5">
+                    <div className="row">
+                    <div className="col-md-6 shadow p-5 mr-0">
                         <Controller
                             name="name"
                             as={
@@ -155,8 +156,9 @@ export default function Register() {
 
                         </div>
                     </div>
-                    <div className="col-md-6 d-none d-md-block align-self-end">
+                    <div className="col-md-6 d-none d-md-block ">
                         <img className="img-fluid" src={LoginImg} alt="" />
+                    </div>
                     </div>
                 </form>
             </div>

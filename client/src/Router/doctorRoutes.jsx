@@ -3,6 +3,8 @@ import { Route, Redirect, useRouteMatch } from "react-router-dom";
 
 // const Dashboard = React.lazy(() => import('../Pages/Dashboard/Dashboard'));
 import Dashboard from '../Pages/Dashboard/Dashboard'
+import Appointment from '../Pages/Appointment'
+
 function RestaurantRoutes() {
 
     let { path, url } = useRouteMatch();
@@ -12,9 +14,9 @@ function RestaurantRoutes() {
         <React.Fragment>
             <Suspense fallback="loading">
                 <Route path={`${path}dashboard`} component={Dashboard} />
-                {/* <Route path={`${path}/patients`} component={Dashboard} />
-                <Route path={`${path}/appointment`} component={Dashboard} />
-                <Route path={`${path}/prescriptions`} component={Dashboard} /> */}
+                <Route path={`${path}/patients`} component={Dashboard} />
+                <Route path={`${path}appointment`} component={Appointment} />
+                <Route path={`${path}/prescriptions`} component={Dashboard} />
 
                 <Route render={() => <Redirect to={`${path}dashboard`} />} />
             </Suspense>
