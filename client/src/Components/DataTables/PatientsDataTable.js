@@ -1,10 +1,9 @@
 import React, { useEffect, useState } from "react";
 
-import { useContext } from 'react';
-import { DataContext } from '../../App';
 import { getPatients } from '../../api/api'
-const [pat, setPat] = useState([]);
+
 const PatientsDataTable = () => {
+    const [pat, setPat] = useState([]);
     const Doctor = () => {
         getPatients().then((res) => {
             setPat(res.data.data)
@@ -12,7 +11,7 @@ const PatientsDataTable = () => {
     };
     useEffect(() => {
         Doctor()
-     
+       
     }, [])
     let srNo = 1;
     return (
@@ -21,10 +20,7 @@ const PatientsDataTable = () => {
                 <tr>
                     <th className="text-secondary text-left" scope="col">Sr No</th>
                     <th className="text-secondary" scope="col">Name</th>
-                    <th className="text-secondary" scope="col">Gender</th>
-                    <th className="text-secondary" scope="col">Age</th>
-                    <th className="text-secondary" scope="col">Weight</th>
-                    <th className="text-secondary" scope="col">Phone</th>
+                  
                     <th className="text-secondary" scope="col">Email</th>
                 </tr>
             </thead>
@@ -34,11 +30,9 @@ const PatientsDataTable = () => {
 
                         <tr>
                             <td>{srNo++}</td>
+                            <td>{patient.createdAt}</td>
                             <td>{patient.name}</td>
-                            <td>{patient.gender}</td>
-                            <td>{patient.age}</td>
-                            <td>{patient.weight}KG</td>
-                            <td>{patient.phone}</td>
+                   
                             <td>{patient.email}</td>
                         </tr>
                     )

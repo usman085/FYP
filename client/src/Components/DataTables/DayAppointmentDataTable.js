@@ -1,28 +1,21 @@
-import React, {useState} from 'react';
-import { useContext } from 'react';
-import { DataContext, CalenderContext } from '../../App';
+import React, { useEffect, useState } from "react";
+
+import { getDoctors } from '../../api/api'
 
 const DayAppointmentDataTable = () => {
-    const CalenderData = useContext(CalenderContext);
-    const ContextData = useContext(DataContext);
-    const formatedDate = `${CalenderData.date.getDate()}-${CalenderData.date.getMonth() + 1}-${CalenderData.date.getFullYear()}`;
-    const [selectAppointment, setSelectAppointment] = useState(null);
-
-    const appointmentsOfTheDay = ContextData.allBookedAppointments.filter(ap => ap.date === formatedDate && ap.status === "Approved" );
-    const handleVisitingStatusChange = visitingStatus => {
-        const data = {id : selectAppointment._id, visitingStatus }
-
-        //Replacing Modified data to Data Context
-        const newDataArray = Array.from(ContextData.allBookedAppointments);
-        const modifiedData = {...selectAppointment};
-        modifiedData.visitingStatus = visitingStatus;
-        const selectedIndex = newDataArray.indexOf(selectAppointment);
-
-        newDataArray.splice(selectedIndex,1, modifiedData);
-        ContextData.setAllBookedAppointments(newDataArray)
- 
+    
+    const [pat, setPat] = useState([]);
+    const Doctor = () => {
         
-    }
+            getDoctors(JSON.parse(localStorage.getItem('auth_user')).user._id).then((res) => {
+            setPat(res.data.data)
+        })
+    };
+    useEffect(() => {
+        Doctor()
+
+    }, [])
+ 
     return (
         <div className="bg-white rounded shadow-sm p-3" style={{
             height: "442px",
@@ -31,18 +24,11 @@ const DayAppointmentDataTable = () => {
         <div className="py-3 d-flex align-items-center justify-content-between">
             <h6 className="text-primary"> Appointments </h6>
             <div className="selector">
-                {CalenderData.date.getDate()} {CalenderData.date.toLocaleString('default', { month: 'short' }) } , {CalenderData.date.getFullYear()}
+                {/* {CalenderData.date.getDate()} {CalenderData.date.toLocaleString('default', { month: 'short' }) } , {CalenderData.date.getFullYear()} */}
             </div>
             
         </div>
         {
-            // appointmentsOfTheDay.length === 0 ?
-            // <div className="p-5">
-            //     <h4 className="lead text-center">No Appointments for this Date</h4>
-            // </div>
-
-            //     :
-            
             <table className="table table-borderless">
 
                 <thead>
@@ -54,14 +40,14 @@ const DayAppointmentDataTable = () => {
                 </thead>
                 <tbody>
                     {
-                    appointmentsOfTheDay.map(ap => 
+                            pat.map(ap =>
 
                             <tr>
                             <td>{ap.patientInfo.name}</td>
                             <td>{ap.date}</td>
                             <td className="text-center">
                                 <select
-                                onClick={() => setSelectAppointment(ap)} onChange={e => handleVisitingStatusChange(e.target.value)} 
+                                // onClick={() => setSelectAppointment(ap)} onChange={e => handleVisitingStatusChange(e.target.value)} 
                                 className="btn btn-primary text-capitalize">
                                     <option selected={ap.visitingStatus == "Not Visited"} className="bg-white text-secondary">Not Visited</option>
                                     <option selected={ap.visitingStatus == "Visited"} className="bg-white text-secondary">Visited</option>

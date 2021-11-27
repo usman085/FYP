@@ -53,7 +53,7 @@ class HomeController extends BaseController {
   getAppointments = async (req, res) => {
     try {
       let { id } = req.params;
-      console.log(id)
+      console.log(id);
       let slots = await Appointment.find({
         patient_id: mongoose.Types.ObjectId(id),
       }).populate("doctor_id");
@@ -63,7 +63,30 @@ class HomeController extends BaseController {
       res.errorResponse();
     }
   };
-
+  allPatient = async (req, res) => {
+    try {
+      let result = await User.aggregate([
+        {
+          $lookup: {
+            from: "roles",
+            localField: "role_id",
+            foreignField: "_id",
+            as: "roles",
+          },
+        },
+        { $unwind: "$roles" },
+        {
+          $match: {
+            "roles.name": "Patient",
+          },
+        },
+      ]);
+      res.successResponse({ data: result });
+    } catch (e) {
+      console.log(e);
+      res.errorResponse();
+    }
+  };
   allDoctors = async (req, res) => {
     try {
       let result = await User.aggregate([

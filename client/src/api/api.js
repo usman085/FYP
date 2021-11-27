@@ -28,6 +28,9 @@ export async function createApp(data) {
 export async function getAppointment(id) {
     return await instance.get(`/appointment/${id}`);
 }
-export async function getPatients(id) {
-    return await instance.get(`/appointment/${id}`);
+export async function getPatients() {
+    return await instance.get(`/patients`);
+}
+export async function getDoctors(id) {
+    return await instance.get(`/appointments/${id}`);
 }

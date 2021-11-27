@@ -26,10 +26,7 @@ const DataTable = (props) => {
         {
             props.children
         }
-        {
-            ContextData.preLoaderVisibility &&
-            <Preloader/>
-        }        
+       
         </div>
     );
 };
