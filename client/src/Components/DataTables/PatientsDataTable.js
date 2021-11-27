@@ -1,9 +1,19 @@
-import React from 'react';
+import React, { useEffect, useState } from "react";
+
 import { useContext } from 'react';
 import { DataContext } from '../../App';
-
+import { getPatients } from '../../api/api'
+const [pat, setPat] = useState([]);
 const PatientsDataTable = () => {
-    const ContextData = useContext(DataContext);
+    const Doctor = () => {
+        getPatients().then((res) => {
+            setPat(res.data.data)
+        })
+    };
+    useEffect(() => {
+        Doctor()
+     
+    }, [])
     let srNo = 1;
     return (
         <table className="table table-borderless">
@@ -20,7 +30,7 @@ const PatientsDataTable = () => {
             </thead>
             <tbody>
                 {
-                    ContextData.allPatients.map(patient =>
+                    pat.map(patient =>
 
                         <tr>
                             <td>{srNo++}</td>
