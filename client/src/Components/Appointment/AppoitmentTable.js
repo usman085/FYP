@@ -11,7 +11,9 @@ import { faPencilAlt, faPlusCircle } from "@fortawesome/free-solid-svg-icons";
 
 import { getDoc, createApp, getAppointment} from '../../api/api'
 Modal.setAppElement("#root");
-
+function date(date) {
+  return new Date(date).toLocaleString()
+}
 const AppointmentTable = () => {
 
   const [selectAppointment, setSelectAppointment] = useState(null);
@@ -27,6 +29,7 @@ const AppointmentTable = () => {
     datas.patient_id = JSON.parse(localStorage.getItem('auth_user')).user._id
     createApp(datas).then((res)=>{
       setModalIsOpen(false)
+      getApp()
     })
     
   }; 
@@ -84,7 +87,7 @@ const AppointmentTable = () => {
             {appointment.map(ap => (
               <tr className="text-center">
                
-                <td> {ap.createdAt} </td>
+                <td> {date(ap.createdAt)} </td>
                 <td> {ap.doctor_id.name} </td>{" "}
                 <td> {ap.doctor_id.email} </td>{" "}
                 {/* <td className="text-center">

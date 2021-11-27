@@ -2,6 +2,9 @@ import React, { useEffect, useState } from "react";
 
 import { getDoctors } from '../../api/api'
 
+function date(date){
+  return  new Date(date).toLocaleString()
+}
 const DayAppointmentDataTable = () => {
     
     const [pat, setPat] = useState([]);
@@ -32,19 +35,23 @@ const DayAppointmentDataTable = () => {
             <table className="table table-borderless">
 
                 <thead>
-                    <tr>
-                    <th className="text-secondary" scope="col">Name</th>
-                    <th className="text-secondary" scope="col">Schedule</th>
-                    <th className="text-secondary text-center" scope="col">Action</th>
+                        <tr className="text-center" >
+                    <th className="text-secondary" scope="col">Date</th>
+                            <th className="text-secondary" scope="col">Disease</th>
+                    <th className="text-secondary text-center" scope="col">Patient Name</th>
+                            <th className="text-secondary text-center" scope="col">Status</th>
+
                     </tr>
                 </thead>
                 <tbody>
                     {
                             pat.map(ap =>
 
-                            <tr>
-                            <td>{ap.patientInfo.name}</td>
-                            <td>{ap.date}</td>
+                                <tr className="text-center" >
+                                    <td>{date(ap.createdAt)}</td>
+                            <td>{ap.disease}</td>
+                            <td>{ap.patient_id.name}</td>
+
                             <td className="text-center">
                                 <select
                                 // onClick={() => setSelectAppointment(ap)} onChange={e => handleVisitingStatusChange(e.target.value)} 

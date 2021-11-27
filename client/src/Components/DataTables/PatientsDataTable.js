@@ -1,7 +1,9 @@
 import React, { useEffect, useState } from "react";
 
 import { getPatients } from '../../api/api'
-
+function date(date) {
+    return new Date(date).toLocaleString()
+}
 const PatientsDataTable = () => {
     const [pat, setPat] = useState([]);
     const Doctor = () => {
@@ -30,7 +32,7 @@ const PatientsDataTable = () => {
 
                         <tr>
                             <td>{srNo++}</td>
-                            <td>{patient.createdAt}</td>
+                            <td>{date(patient.createdAt)}</td>
                             <td>{patient.name}</td>
                    
                             <td>{patient.email}</td>
