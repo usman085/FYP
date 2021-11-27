@@ -19,3 +19,12 @@ export async function register({ name, email, password, role_id }) {
 export async function roles() {
     return await instance.get('/auth/roles');
 }
+export async function getDoc() {
+    return await instance.get('/doctors');
+}
+export async function createApp(data) {
+    return await instance.post('/appointment', data);
+}
+export async function getAppointment(id) {
+    return await instance.get(`/appointment/${id}`);
+}

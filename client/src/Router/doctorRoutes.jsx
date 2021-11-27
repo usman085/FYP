@@ -8,6 +8,7 @@ import Patients from '../Pages/Dashboard/Patients'
 import Prescriptions from '../Pages/Dashboard/Prescriptions'
 
 import Appointment from '../Pages/Patient/Appointment'
+import PatientsDashboard from '../Pages/Patient/Dashboard'
 
 function RestaurantRoutes() {
 
@@ -23,7 +24,7 @@ function RestaurantRoutes() {
                 <Route path={`${path}prescriptions`} component={Prescriptions} />
 
                 <Route path={`${path}patient/appointment`} component={Appointment} />
-                <Route path={`${path}prescriptions`} component={Prescriptions} />
+                <Route path={`${path}patient/dashboard`} component={PatientsDashboard} />
                 <Route path={`${path}prescriptions`} component={Prescriptions} />
 
 

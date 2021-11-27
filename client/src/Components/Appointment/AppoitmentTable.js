@@ -1,77 +1,140 @@
-import React, { useContext } from "react";
+import React, { useEffect,useState } from "react";
 import AppointmentCard from "./AppointmentCard";
-import { useState } from "react";
+
 import { DataContext, CalenderContext } from "../../App";
 import Modal from "react-modal";
 import { useForm } from "react-hook-form";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faCheckCircle } from "@fortawesome/free-solid-svg-icons";
 import Preloader from "../Preloader/Preloader";
+import { faPencilAlt, faPlusCircle } from "@fortawesome/free-solid-svg-icons";
 
+import { getDoc, createApp, getAppointment} from '../../api/api'
 Modal.setAppElement("#root");
 
 const AppointmentTable = () => {
-  const contextData = useContext(CalenderContext);
-  const contextData_2 = useContext(DataContext);
+
   const [selectAppointment, setSelectAppointment] = useState(null);
   const [modalIsOpen, setModalIsOpen] = useState(false);
   const [isBooked, setIsBooked] = useState(false);
-  console.log(contextData_2.preLoaderVisibility);
-
-  const date = `${contextData.date.getDate()}-${
-    contextData.date.getMonth() + 1
-  }-${contextData.date.getFullYear()}`;
-
-  const makeBooking = (patientInfo) => {
-    setIsBooked(true);
-    const apId = selectAppointment.id;
-    const time = selectAppointment.visitingHour;
-    const dataToStore = { apId, date, time, patientInfo, status: "Pending" };
-    fetch("http://localhost:3200/makeBooking", {
-      method: "POST",
-      headers: {
-        "Content-type": "application/json",
-      },
-      body: JSON.stringify(dataToStore),
-    })
-      .then((res) => res.json())
-      .then((data) => {
-        const newAllBooking = [...contextData_2.allBookedAppointments];
-        newAllBooking.push(data);
-        contextData_2.setAllBookedAppointments(newAllBooking);
-      })
-      .catch((err) => console.log(err));
-  };
+  
+  const [doc, setDoc] = useState([]);
+  const [appointment, setAppointment] = useState([]);
 
   const { register, handleSubmit, watch, errors } = useForm();
 
-  const onSubmit = (data) => {
-    console.log(data);
-    makeBooking(data);
+  const onSubmit = (datas) => {
+    datas.patient_id = JSON.parse(localStorage.getItem('auth_user')).user._id
+    createApp(datas).then((res)=>{
+      setModalIsOpen(false)
+    })
+    
+  }; 
+  const Doctor = () => {
+    getDoc().then((res) => {
+      setDoc(res.data.data)
+    })
   };
-  const modalController = (apId) => {
-    setModalIsOpen(true);
-    const selectedAp = contextData_2.allAppointments.find(
-      (ap) => ap.id === apId
-    );
-    if (selectedAp) {
-      setSelectAppointment(selectedAp);
-    }
+  const getApp = () => {
+    const id = JSON.parse(localStorage.getItem('auth_user')).user._id
+    getAppointment(id).then((res) => {
+      setAppointment(res.data.data)
+    })
   };
+  useEffect(()=>{
+    Doctor()
+    getApp()
+  },[])
+ 
   return (
-    <div className="appointments container py-5 mt-5">
-      <h3 className="text-primary text-center my-5">
-        {" "}
-        Available Appointments on{" "}
-        {contextData.date.toLocaleString("default", { month: "long" })}{" "}
-        {contextData.date.getDate()}, {contextData.date.getFullYear()}{" "}
+   
+    <div className="offset-2 col-md-10 p-4 pr-5 ">
+      <h3 className="text-primary text-center p-12">
+      Create Appointment
       </h3>{" "}
       <div className="row">
-        {" "}
-        {contextData_2.preLoaderVisibility && <Preloader />}{" "}
-        {contextData_2.allAppointments.map((SingleAp) => (
-          <AppointmentCard data={SingleAp} modalController={modalController} />
-        ))}
+        <button onClick={() => setModalIsOpen(true)} className="btn btn-primary text-uppercase text-align-right">Book appointment</button>
+        <table className="table table-border">
+          <thead>
+            <tr className="text-center">
+             
+              <th className="text-secondary" scope="col">
+                {" "}
+                Booking Date{" "}
+              </th>{" "}
+             
+              <th className="text-secondary" scope="col">
+                {" "}
+                Name{" "}
+              </th>{" "}
+              <th className="text-secondary" scope="col">
+                {" "}
+                Contact{" "}
+              </th>{" "}
+              <th className="text-secondary" scope="col">
+                {" "}
+                Status{" "}
+              </th>{" "}
+           
+            </tr>{" "}
+          </thead>{" "}
+          <tbody>
+            {" "}
+            
+            {appointment.map(ap => (
+              <tr>
+               
+                <td> {ap.createdAt} </td>
+                <td> {ap.doctor_id.name} </td>{" "}
+                <td> {ap.doctor_id.email} </td>{" "}
+                {/* <td className="text-center">
+                  <select
+                    // onClick={() => setSelectAppointment(ap)}
+                    // onChange={e => handleStatusChange(e.target.value)}
+                    className={
+                      ap.status == "Rejected"
+                        ? "btn btn-danger"
+                        : ap.status == "Approved"
+                          ? "btn btn-success"
+                          : "btn btn-info"
+                    }
+                  >
+                    <option
+                      selected={ap.status == "Pending"}
+                      className="bg-white text-secondary"
+                    >
+                      {" "}
+                      Pending{" "}
+                    </option>{" "}
+                    <option
+                      selected={ap.status == "Approved"}
+                      className="bg-white text-secondary"
+                    >
+                      {" "}
+                      Approved{" "}
+                    </option>{" "}
+                    <option
+                      selected={ap.status == "Rejected"}
+                      className="bg-white text-secondary"
+                    >
+                      {" "}
+                      Rejected{" "}
+                    </option>{" "}
+                  </select>
+
+                  <button
+                    // onClick={() => openDataEditModal(ap._id)}
+                    className="btn ml-1 btn-warning text-white"
+                  >
+                    {" "}
+                    <FontAwesomeIcon icon={faPencilAlt} />{" "}
+                  </button>
+                </td>{" "} */}
+              
+              </tr>
+            ))}
+          </tbody>{" "}
+        </table>
       </div>
       <Modal
         isOpen={modalIsOpen}
@@ -104,41 +167,27 @@ const AppointmentTable = () => {
             <h4 className="mt-5 lead"> Appointment Request Sent! </h4>{" "}
           </div>
         ) : (
-          selectAppointment && (
+       (
             <div className="px-4">
               <h4 className="text-primary text-center">
-                {" "}
-                {selectAppointment.subject}{" "}
+            
+                
               </h4>{" "}
-              <p className="text-center text-secondary  small mb-5">
+              {/* <p className="text-center text-secondary  small mb-5">
                 {" "}
                 On{" "}
                 {contextData.date.toLocaleString("default", {
                   month: "long",
                 })}{" "}
                 {contextData.date.getDate()},{contextData.date.getFullYear()}{" "}
-              </p>{" "}
+              </p>{" "} */}
               <form onSubmit={handleSubmit(onSubmit)}>
+              
                 <div className="form-group">
                   <input
                     type="text"
                     ref={register({ required: true })}
-                    name="name"
-                    placeholder="Your Name"
-                    className="form-control"
-                  />{" "}
-                  {errors.name && (
-                    <span className="text-danger">
-                      {" "}
-                      This field is required{" "}
-                    </span>
-                  )}
-                </div>{" "}
-                <div className="form-group">
-                  <input
-                    type="text"
-                    ref={register({ required: true })}
-                    name="phone"
+                      name="phone_number"
                     placeholder="Phone Number"
                     className="form-control"
                   />{" "}
@@ -149,74 +198,55 @@ const AppointmentTable = () => {
                     </span>
                   )}{" "}
                 </div>{" "}
-                <div className="form-group">
-                  <input
-                    type="text"
-                    ref={register({ required: true })}
-                    name="email"
-                    placeholder="Email"
-                    className="form-control"
-                  />{" "}
-                  {errors.email && (
-                    <span className="text-danger">
-                      {" "}
-                      This field is required{" "}
-                    </span>
-                  )}{" "}
-                </div>{" "}
-                <div className="form-group row">
-                  <div className="col-4">
-                    <select
-                      className="form-control"
-                      name="gender"
-                      ref={register({ required: true })}
-                    >
-                      <option disabled={true} value="Not set">
-                        {" "}
-                        Select Gender{" "}
-                      </option>{" "}
-                      <option value="Male"> Male </option>{" "}
-                      <option value="Female"> Female </option>{" "}
-                      <option value="Not set"> Other </option>{" "}
-                    </select>{" "}
-                    {errors.gender && (
-                      <span className="text-danger">
-                        {" "}
-                        This field is required{" "}
-                      </span>
-                    )}
-                  </div>{" "}
-                  <div className="col-4">
+               
+            
+                  <div className="form-group">
                     <input
+                      type="text"
                       ref={register({ required: true })}
+                      name="disease"
+                      placeholder="Disease"
                       className="form-control"
-                      name="age"
-                      placeholder="Your Age"
-                      type="number"
                     />{" "}
-                    {errors.age && (
+                    {errors.disease && (
                       <span className="text-danger">
                         {" "}
                         This field is required{" "}
                       </span>
                     )}{" "}
                   </div>{" "}
-                  <div className="col-4">
-                    <input
-                      ref={register({ required: true })}
-                      className="form-control"
-                      name="weight"
-                      placeholder="Weight"
-                      type="number"
-                    />{" "}
-                    {errors.weight && (
-                      <span className="text-danger">
-                        {" "}
-                        This field is required{" "}
-                      </span>
-                    )}{" "}
-                  </div>{" "}
-                </div>
+          
+                  <div className="form-group row">
+                    <div className="col-12">
+                      <select
+                        className="form-control"
+                        name="doctor_id"
+                        ref={register({ required: true })}
+                      >
+                        <option disabled={true} value="Not set">
+                          {" "}
+                          Select Doctor{" "}
+                        </option>{" "}
+                        {
+                          doc.map((item)=>{
+                            console.log(item,"item")
+                            return [
+                              <option value={item._id}> {item.name}</option>
+                            ]
+                          })
+                        }
+                      
+                      
+                      </select>{" "}
+                      {errors.doctor && (
+                        <span className="text-danger">
+                          {" "}
+                          This field is required{" "}
+                        </span>
+                      )}
+                    </div>{" "}
+                   
+                  </div>
                 <div className="form-group text-right">
                   <button type="submit" className="btn btn-primary">
                     {" "}

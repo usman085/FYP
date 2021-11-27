@@ -4,7 +4,7 @@ import Sidebar from '../../Components/Dashboard/Sidebar';
 import DataTable from '../../Components/DataTables/DataTable';
 import AppointmentDataTable from '../../Components/DataTables/AppointmentDataTable';
 
-const Dashboard = () => {
+const PatientsDashboard = () => {
 
     return (
         <div className="container-fluid row " >
@@ -20,4 +20,4 @@ const Dashboard = () => {
     );
 };
 
-export default Dashboard;
+export default PatientsDashboard;
