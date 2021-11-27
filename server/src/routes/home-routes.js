@@ -6,6 +6,7 @@ const homeController = new HomeController();
 router.get("/search", homeController.searchDoctor.bind(homeController));
 
 router.get("/doctors", homeController.allDoctors.bind(homeController));
+router.get("/patients", homeController.allPatient.bind(homeController));
 
 router.get("/departments", homeController.departments.bind(homeController));
 
