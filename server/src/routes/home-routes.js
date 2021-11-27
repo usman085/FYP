@@ -23,6 +23,11 @@ router.get(
 );
 
 router.get(
+  "/appointments/:id",
+  homeController.getAppointmentsTow.bind(homeController)
+);
+
+router.get(
   "/time-slot/:doctor_id",
   homeController.getDoctorTimeSlot.bind(homeController)
 );
