@@ -44,7 +44,7 @@ const Footer = () => {
                     <FooterCol key={3} menuTitle="Oral Health" menuItems={oralHealth}/>
                     <FooterCol key={4} menuTitle="Our Address" menuItems={ourAddress}> 
                         <ul className="social-media list-inline">
-                            <li className="list-inline-item"><a href="//facebook.com/dev.shadin"><FontAwesomeIcon className="icon active-icon" icon={faFacebookF} /></a></li>
+                            <li className="list-inline-item"><a href="//facebook.com"><FontAwesomeIcon className="icon active-icon" icon={faFacebookF} /></a></li>
                             <li className="list-inline-item"><a href="//google.com"><FontAwesomeIcon className="icon" icon={faGooglePlusG} /></a></li>
                             <li className="list-inline-item"><a href="//instagram.com"><FontAwesomeIcon className="icon" icon={faInstagram} /></a></li>
                         </ul>
