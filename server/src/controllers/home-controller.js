@@ -63,6 +63,21 @@ class HomeController extends BaseController {
       res.errorResponse();
     }
   };
+
+  getAppointmentsTow = async (req, res) => {
+    try {
+      let { id } = req.params;
+      console.log(id);
+      let slots = await Appointment.find({
+        doctor_id: mongoose.Types.ObjectId(id),
+      }).populate("patient_id");
+      res.successResponse({ data: slots });
+    } catch (e) {
+      console.log(e);
+      res.errorResponse();
+    }
+  };
+
   allPatient = async (req, res) => {
     try {
       let result = await User.aggregate([
