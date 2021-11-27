@@ -1,23 +1,22 @@
-import React, { createContext, useState, useEffect } from 'react';
+import React, { createContext, useState, useEffect } from "react";
 
-import { BrowserRouter, Route, Switch } from 'react-router-dom';
+import { BrowserRouter, Route, Switch } from "react-router-dom";
 // import Appointment from './Pages/Appointment';
 // import Home from './Pages/Home';
 // import NotFound from './Pages/NotFound';
 // import Login from './Pages/Login';
 // import Register from './Pages/Register';
-import './App.css';
-import router from './Router/index';
+import "./App.css";
+import router from "./Router/index";
 
 // import Dashboard from './Pages/Dashboard/Dashboard';
 // import Patients from './Pages/Dashboard/Patients';
 // import DashBoardAppointments from './Pages/Dashboard/Appointments';
 // import Prescriptions from './Pages/Dashboard/Prescriptions';
 export const DataContext = createContext();
-export const CalenderContext = createContext()
+export const CalenderContext = createContext();
 
 function App() {
-
   const [allAppointments, setAllAppointments] = useState([]);
   const [allBookedAppointments, setAllBookedAppointments] = useState([]);
   const [allPatients, setAllPatients] = useState([]);
@@ -60,20 +59,26 @@ function App() {
 
   // }, [allBookedAppointments.length])
 
-  const contextData = { allAppointments, setAllAppointments, allBookedAppointments, setAllBookedAppointments, allPatients, preLoaderVisibility }
+  const contextData = {
+    allAppointments,
+    setAllAppointments,
+    allBookedAppointments,
+    setAllBookedAppointments,
+    allPatients,
+    preLoaderVisibility,
+  };
   const calenderContextValue = { date, setDate };
 
   return (
     <DataContext.Provider value={contextData}>
       <CalenderContext.Provider value={calenderContextValue}>
-        <div className="App" >
+        <div className="App">
           <BrowserRouter>
             <Switch>
               <Route path="/" component={router} />
             </Switch>
           </BrowserRouter>
         </div>
-       
       </CalenderContext.Provider>
     </DataContext.Provider>
   );
