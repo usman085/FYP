@@ -48,13 +48,13 @@ const AppointmentTable = () => {
  
   return (
    
-    <div className="offset-2 col-md-10 p-4 pr-5 ">
+    <div className="offset-2 col-md-10 p-5 pr-5 ">
       <h3 className="text-primary text-center p-12">
       Create Appointment
       </h3>{" "}
       <div className="row">
         <button onClick={() => setModalIsOpen(true)} className="btn btn-primary text-uppercase text-align-right">Book appointment</button>
-        <table className="table table-border">
+        <table className="table table-border pt-2">
           <thead>
             <tr className="text-center">
              
@@ -82,7 +82,7 @@ const AppointmentTable = () => {
             {" "}
             
             {appointment.map(ap => (
-              <tr>
+              <tr className="text-center">
                
                 <td> {ap.createdAt} </td>
                 <td> {ap.doctor_id.name} </td>{" "}

@@ -20,17 +20,7 @@ const DayAppointmentDataTable = () => {
 
         newDataArray.splice(selectedIndex,1, modifiedData);
         ContextData.setAllBookedAppointments(newDataArray)
-        
-        fetch("https://doctors-portal-backend.herokuapp.com/updateVisitingStatus",{
-            method : "POST",
-            headers : {
-                "Content-type" : "application/json"
-            },
-            body: JSON.stringify(data)
-        })
-        .then(res =>res.json())
-        .then(data => console.log(data))
-        .catch(err => console.log(err))
+ 
         
     }
     return (
@@ -46,12 +36,12 @@ const DayAppointmentDataTable = () => {
             
         </div>
         {
-            appointmentsOfTheDay.length === 0 ?
-            <div className="p-5">
-                <h4 className="lead text-center">No Appointments for this Date</h4>
-            </div>
+            // appointmentsOfTheDay.length === 0 ?
+            // <div className="p-5">
+            //     <h4 className="lead text-center">No Appointments for this Date</h4>
+            // </div>
 
-                :
+            //     :
             
             <table className="table table-borderless">
 
